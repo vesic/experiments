@@ -1,0 +1,44 @@
+<style> span { margin: 10px; } </style>
+
+<h1></h1>
+
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+<script>
+
+	var elements = [];
+	for (var i = 0; i < 10; i++) {
+	  elements[elements.length] = Math.floor(Math.random()*100+1);
+	}
+	var len = elements.length;
+
+	function swap(array, pos1, pos2) {
+	  var temp = array[pos1];
+	  array[pos1] = array[pos2];
+	  array[pos2] = temp;
+	}
+
+	for (var i = 0; i < len; i++) {
+		setTimeout(function() {
+			for (var j = 0; j < len-1; j++) {
+				(function(n) {
+					setTimeout(function() {
+						if (elements[n] > elements[n+1]) {
+							swap(elements, n, n+1)
+						}
+						var elementToDisplay = [];
+						$.each(elements, function(index, value) {
+							if (index === n || index === n+1) 
+								elementToDisplay.push("<span style='color:red'>"+value+"</span>")
+							else 
+								elementToDisplay.push("<span>"+value+"</span>");
+						})
+						$('h1').html(elementToDisplay.join(''));
+					}, n * 500);
+				})(j);
+			}
+		}, i * len * 500)
+	}
+	
+</script>
+
